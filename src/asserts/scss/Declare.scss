@@ -1,0 +1,99 @@
+.declare-result{
+    margin-top: 3rem;
+    
+    padding-top: 2rem;
+    padding-bottom: 5rem;
+    .detailsform{
+        background-color: white;
+        padding:2rem;
+        margin-top: 2rem;
+        border-radius: 20px;
+        
+        .show-winner,
+        .declare-winner{
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+.show-full-list{
+    background-color: white;
+    padding:2rem;
+    margin-top: 2rem;
+    border-radius: 20px;
+}
+
+.all-game-list{
+    background-color: rgb(196, 236, 252);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow:  0px 4px 4px 4px rgba(0, 0, 0, 0.25);
+    .heading-game{
+        font-family: cursive;
+        font-weight: 700;
+        color: orange;
+        text-shadow: rgb(247, 121, 4)  2px 0px;
+    }
+
+    .show-details{
+        font-size: 1.3rem;
+        line-height: 1;
+        padding-top: 0.3rem;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        // text-align: center;
+        border-bottom: gray;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        .span-div{
+            font-weight: 800;
+            display: inline;
+            font-size: 1.3rem;
+        }
+        .total-users{
+            display: inline;
+            margin-right: 1rem;
+            
+        }
+        .total-amount{
+            display: inline;
+           
+        }
+        .else-part{
+            color:red;
+        }
+    }
+}
+
+.bids-list{
+    padding-top: 0.5rem;
+    line-height: 0.5;
+    .user-name{
+        margin-right: 2rem;
+    }
+    .bid-amount{
+    }
+}
+
+
+@media (max-width: 575.98px){
+    .heading{
+        font-size: 1.1rem;    
+    }
+    .show-details{
+        font-size: 1rem;
+        
+    }
+    .total-users,
+    .total-amount{
+        font-size: 1rem;
+        display: block !important;
+        line-height: 1 !important;
+    }
+
+    .declare-result{
+        padding-top: 5rem;
+    }
+}

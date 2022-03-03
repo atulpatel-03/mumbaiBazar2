@@ -1,0 +1,311 @@
+.users-div{
+    width: 80%;
+    height: 10rem;
+    justify-content: center;
+    margin-top: 5rem;
+    border-radius: 20px;
+  
+}
+.heading-user{
+    text-align: center;
+    color: whitesmoke;
+    font-weight: 800;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.approve{
+    margin: 0rem auto;
+        width: 80%;
+        display: grid;
+        grid-template-rows: repeat(auto-fit);
+        grid-template-columns: repeat(1, 1fr);
+        justify-content: center;
+
+        .approve-card{
+            background-color: whitesmoke;
+            font-size: 1.2rem;
+            transition: 0.3s all ease;
+            border-bottom-style:inset;
+            padding-top: 1rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            margin-bottom: 1rem;
+            border-radius: 20px;
+            transition: 0.5s all ease;
+
+            .approve-btn{
+                float: right;
+                margin-right: 1rem;
+                color:white;
+                background-color: red;
+                margin-bottom: 0.5rem;
+                transition: 0.5s all ease;
+            }
+            .approve-btn:hover{
+                transform:scale(1.1);
+            }
+            .view-btn{
+                float: right;
+                margin-right: 1rem;
+                color:white;
+                background-color: green;
+                margin-bottom: 0.5rem;
+                font-size: 0.8rem;
+                transition: 0.5s all ease;
+            }
+            .hide-btn{
+                float: right;
+                margin-right: 1rem;
+                color:white;
+                margin-bottom: 0.5rem;
+                font-size: 0.8rem;
+                transition: 0.5s all ease;
+            }
+            .view-btn:hover{
+                transform:scale(1.1);
+
+            }
+            .hide-btn:hover{
+                transform: scale(1.1);
+            }
+            .phone{
+                display: inline;
+            }
+         .buttons{
+             padding-top: 0.5rem;
+             display: inline-block;
+             float: right;
+         }
+        }
+}
+
+.unapproved-users{
+    margin-top:3rem;
+    padding-top: 2rem;
+    margin-left: 2rem;
+}
+
+.full-info-details{
+    .heading-info{
+        font-family: cursive;
+        text-align: center;
+        font-weight: 700;
+        color: orange;
+        text-shadow: rgb(247, 121, 4)  2px 0px;
+    }
+
+    .other-info-full{
+        display: grid;
+        grid-template-columns: repeat(2,40%);
+        grid-template-rows: repeat(1,1fr);
+        justify-content: center;
+        
+    }
+
+    .balance-button-div{
+        display: grid;
+        justify-content: flex-end;
+        transition: 0.5s all ease;
+        .add-fund{
+            background-color: lightgreen;
+            font-weight: 700;
+            display: block;
+            font-size: 0.8rem;
+            transition: 0.5s all ease;
+        }
+
+        .add-fund:hover{
+            transform: scale(1.1);
+        }
+
+        .withdraw-fund{
+            background-color: red;
+            opacity: 0.7;
+            font-weight: 700;
+            margin-top: 0.8rem;
+            font-size: 0.8rem;
+            float: right;
+            transition: 0.5s all ease;
+        }
+
+        .withdraw-fund:hover{
+            transform: scale(1.1);
+        }
+    }
+
+    .other-info{
+        display: flex;
+    }
+
+}
+
+.user-img{
+    width: 6rem;
+    margin-right: 0.5rem;
+}
+
+.all-transcations{
+    transition: 0.5s all ease;
+    overflow: auto;
+    height: 60vh;
+    width: 100%;
+    .transaction-info{
+        width: 100%;
+        margin-top: 2rem;
+        background-color: whitesmoke;
+        box-shadow: 0px 4px 4px 4px rgba(0, 0, 0, 0.25);
+            font-size: 1.2rem;
+            transition: 0.3s all ease;
+            border-bottom-style:inset;
+            padding-top: 1rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            margin-bottom: 1rem;
+            border-radius: 20px;
+            transition: 0.5s all ease;
+
+            .bid-type{
+                display: inline;
+            }
+            .bidPlaced,
+            .withdraw,
+            .withDrawal,
+            .withdrawal{
+                color:red;
+                display: inline;
+            }
+
+            .addamount,
+            .addAmount,
+            .bonus,
+            .Bonus,
+            .winning,
+            .Winning{
+                color:green;
+                display: inline;
+            }
+    }
+
+    .transaction-info:hover{
+        transform: scale(1.02);
+        cursor: pointer;
+    }
+
+
+}
+.close-btn{
+    width: 3rem;
+}
+
+.search{
+    margin-top: 1rem;
+    width: 20rem;
+
+    .search-bar{
+        display: inline;
+        width: 10rem;
+    }
+    .search-btn{
+        display: inline;
+        width: 3rem;
+        margin-left: 0.5rem;
+    }
+}
+
+.whatsapp-icon{
+    color:green;
+}
+
+@media (max-width: 575.98px){
+    .unapproved-users{
+        margin-top: 6rem;
+
+        .unapprove-btn{
+            align-items: center;
+            justify-self: center;
+        }
+
+        .heading-user{
+            font-size: 1.5rem;
+        }
+
+        .heading-info{
+            font-size: 1.5rem;
+        }
+    }
+
+    .approve-card{
+        width: 20rem;
+        height: auto;
+        .view-btn{
+            display: block !important;
+            float: initial !important;
+            width: 10rem;
+        }
+
+        .approve-btn{
+            float: initial !important;
+            width: 10rem;
+        }
+        .phone{
+            display: block !important;
+        }
+    }
+    .buttons{
+       padding-left: 2rem;
+        width: 90%;
+        align-self:center;
+        align-items: center;
+    }
+    .hide-btn{
+        margin-top: 0rem;
+    }
+    .full-info-details{
+        .heading-info{
+           font-size: 1.8rem;
+        }
+        
+
+        .other-info-full{
+            display: grid;
+            grid-template-columns: repeat(1,100%);
+            grid-template-rows: repeat(1,1fr);
+            justify-content: center;
+            
+            .other-info{
+                display: flex;
+                flex-direction:column;
+                justify-content: center;
+                .image-div{
+                    align-self: center;
+                }
+                .image-detail{
+                    align-self: center;
+                    
+                }
+            }
+        }
+    }
+
+    .balance-button-div{
+        margin-top:1rem;
+        margin-bottom: 1rem;
+        // display: flex;
+        // flex-wrap: wrap;
+        display: initial !important;
+        
+    }
+
+    .transaction-info{
+       font-size: 0.9rem;
+       padding-left: 0.8rem !important;
+       padding-right: 0.8rem !important;
+    }
+
+    .heading-user{
+        font-size: 2rem;
+    }
+
+    
+}

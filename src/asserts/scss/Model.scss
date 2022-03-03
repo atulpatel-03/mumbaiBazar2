@@ -1,0 +1,58 @@
+.modal-primary-container{
+    position: fixed;
+    display: flex;
+    padding: 20px 10px;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999999;
+    background: rgba(0,0,0,0.2);
+    overflow: auto;
+    transition: 0.05s all ease;
+
+    .modal-primary{
+        display: flex;
+        flex-direction: column;
+        min-height: 100px;
+        height : fit-content;
+        flex: 1;
+        padding: 28px 40px;
+        border-radius: 15px;
+        background: white;
+        position: relative;
+        max-width: 765px;
+        
+    }
+
+    .search-modal , .user-role-modal{
+        position: relative;
+        top : 60px;
+
+        .modal-close-button {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            background : white;
+            padding: 10px;
+            z-index: 2;
+            border: none;
+
+            i{
+                font-size : 2.2em;
+                color : black;
+                margin : 0px;
+            }
+        }
+    }
+
+    .goback{
+        margin-left: 1rem;
+    }
+
+    .gobackbtn{
+        border-color: black;
+        margin-left: 1rem;
+    }
+}

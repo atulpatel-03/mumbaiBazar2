@@ -1,0 +1,100 @@
+.request-list{
+    margin-top: 4rem;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+.request-box{
+    background-color: white;
+    font-size: 1.2rem;
+    border-bottom-style:inset;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-bottom: 1rem;
+    border-radius: 20px;
+    transition: 0.5s all ease;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.heading{
+    text-align: center;
+    color: white;
+    font-weight: 800;
+    margin-top: 0.3rem;
+    margin-bottom: 1rem;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.request-detail{
+    width: 35rem;
+}
+.request{
+    width: 30rem;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    float: right;
+    transition: 0.5s all ease;
+    .accept{
+        margin-top: 0.8rem;
+       margin-bottom: 1rem;
+        
+        background-color: limegreen;
+        color:white;
+        font-weight: 700;
+        transition: 0.5s all ease;
+        width: 5rem;
+    }
+    .accept:hover{
+        transform: scale(1.1);
+    }
+    .decline{
+       background-color: red;
+        
+        color:white;
+        font-weight: 700;
+       width: 5rem;
+        transition: 0.5s all ease;
+    }
+
+    .decline:hover{
+        transform: scale(1.1);
+    }
+}
+
+.type{
+    display: inline;
+}
+.withdraw{
+    color:red;
+    display: inline;
+    font-weight: 700;
+}
+.transfer{
+    display: inline;
+    color: limegreen;
+    font-weight: 700;
+}
+
+@media (max-width: 575.98px){
+    .request-list{
+        margin-top: 5rem;
+    }
+    
+    .request{
+       
+        flex-direction: row;
+        align-items: center;
+        padding-top: 1rem;
+        .accept{
+            margin-top: 0rem;
+            margin-bottom: 0rem;
+            margin-right: 1rem;
+        }
+    }
+
+    .heading{
+        padding-top: 3rem;
+    }
+}

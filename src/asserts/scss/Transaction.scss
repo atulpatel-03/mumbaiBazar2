@@ -1,0 +1,106 @@
+.heading-info{
+    padding-top: 8rem;
+    font-family: cursive;
+    text-align: center;
+    font-weight: 700;
+    color: orange;
+    text-shadow: rgb(247, 121, 4)  2px 0px;
+}
+
+.other-info-full{
+    display: grid;
+    grid-template-columns: repeat(2,40%);
+    grid-template-rows: repeat(1,1fr);
+    justify-content: center;
+    
+}
+
+.all-transcations{
+    transition: 0.5s all ease;
+    overflow: None !important;
+    height: 100vh;
+    width: 100%;
+    .transaction-info{
+        width: 100%;
+        margin-top: 2rem;
+        background-color: whitesmoke;
+        box-shadow: 0px 4px 4px 4px rgba(0, 0, 0, 0.25);
+            font-size: 1.2rem;
+            transition: 0.3s all ease;
+            border-bottom-style:inset;
+            padding-top: 1rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            margin-bottom: 1rem;
+            border-radius: 20px;
+            transition: 0.5s all ease;
+
+            .bid-type{
+                display: inline;
+            }
+            .bidPlaced,
+            .withdraw,
+            .withDrawal,
+            .withdrawal{
+                color:red;
+                display: inline;
+            }
+
+            .addamount,
+            .addAmount,
+            .bonus,
+            .Bonus,
+            .winning,
+            .Winning{
+                color:green;
+                display: inline;
+            }
+    }
+}
+
+    .transaction-info:hover{
+        transform: scale(1.02);
+        cursor: pointer;
+    }
+
+
+
+.other-info{
+    display: flex;
+}
+
+.submit-button{
+    background-color: white;
+    margin-left: 1rem;
+}
+
+.submit-button:hover{
+    background-color: green;
+    color:white;
+
+}
+
+.sorting-tech
+{
+    align-self: center;
+    margin-right:1rem;
+    border-radius: 10px;
+    padding:0.5rem 1rem;
+}
+
+.sorting-tech2{
+    border-radius: 10px;
+    padding:0.5rem 1rem;
+
+}
+
+label{
+    color: white;
+    font-weight: 700;
+    margin-right: 1rem;
+}
+
+.sorting-div{
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+}
