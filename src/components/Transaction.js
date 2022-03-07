@@ -24,10 +24,11 @@ const Transaction = () => {
     const [show, setShow] = useState(false);
     const [formData, setFormData] = useState({
         sortDateFrom:'',
-        sortDateTo:''
+        sortDateTo:'',
+        filter:'',
     });
 
-    const { sortDateFrom, sortDateTo } = formData;
+    const { sortDateFrom, sortDateTo, filter } = formData;
     const onChange = e =>{
         setFormData({
             ...formData,
@@ -63,9 +64,28 @@ const Transaction = () => {
 
     const handleClick = () =>{
        setShow(true);
+       
         var filterResult = myResult.filter((t)=>  t.timestamp.seconds >= Date.parse(sortDateFrom)/1000 && t.timestamp.seconds <= Date.parse(sortDateTo)/1000);
         console.log("list final",filterResult);
         setAllTransactionTemp(filterResult);
+    }
+
+    const handleClick2 = () =>{
+        setShow(true);
+       
+        if(filter == "" && sortDateFrom == ""){
+            setAllTransactionTemp(myResult);
+        }
+        else if(sortDateFrom != "" && sortDateTo != ""){
+            var filterResult = allTransactionTemp.filter((t)=> t.type == filter);
+            console.log("list final",filterResult);
+            setAllTransactionTemp(filterResult);
+        }
+        else{
+            var filterResult = myResult.filter((t)=> t.type == filter);
+        console.log("list final",filterResult);
+        setAllTransactionTemp(filterResult);
+        }
     }
 
     
@@ -81,6 +101,17 @@ const Transaction = () => {
             <label>To Date</label><input className='sorting-tech2' type="date" name="sortDateTo" value={sortDateTo} onChange={onChange} />
             <div  className='btn btn-large submit-button' onClick={handleClick}>Submit</div>
             </div>
+            <div className='container'>
+            <label className='search-type-label'>Search By Type</label>
+            <select className='sorting-tech select-tech' name="filter" value={filter} onChange={onChange}>
+                <option value="">Choose Type</option>
+                <option value="bonus">Bonus</option>
+                <option value="bidPlaced">Bid Placed</option>
+                <option value="addamount">Add Amount</option>
+                <option value="winning">Winning</option>
+              </select>
+              <button className='btn btn-large filter-btn' onClick={handleClick2}>Search</button>
+            </div>
             <div className='all-transcations container'>
             
             {show ? (allTransactionTemp.map((a)=> {
@@ -89,7 +120,9 @@ const Transaction = () => {
                 <div className='game-trans'>Game : {a.gameName}</div>
                     <div className='bid-amount'>Amount : {a.amount}</div>
                     <div className='bid-type'>Type : <div className={a.type}>{a.type}</div></div>
-                    
+                    <div className='bid'>Bid : {a.number} {" "} {a.extraNumber}</div>
+                    <div className='bid'>Session : {a.session}</div>
+                    <div className='bid'>Game Type : {a.type2}</div>
                     <div className='trans-time'>Time - {moment.unix(a.timestamp.seconds).format('dddd, MMMM Do, YYYY h:mm:ss A')}</div>
                 </div>
             })):(myResult.map((a)=> {
@@ -98,8 +131,10 @@ const Transaction = () => {
                 <div className='game-trans'>Game : {a.gameName}</div>
                     <div className='bid-amount'>Amount : {a.amount}</div>
                     <div className='bid-type'>Type : <div className={a.type}>{a.type}</div></div>
-                    
-                    <div className='trans-time'>Time - {moment.unix(a.timestamp.seconds).format('dddd, MMMM Do, YYYY h:mm:ss A')}</div>
+                    <div className='bid'>Bid : {a.number} {" "} {a.extraNumber}</div>
+                    <div className='bid'>Session : {a.session}</div>
+                    <div className='bid'>Game Type : {a.type2}</div>
+                    <div className='trans-time'>Time : {moment.unix(a.timestamp.seconds).format('dddd, MMMM Do, YYYY h:mm:ss A')}</div>
                 </div>
             }))
             

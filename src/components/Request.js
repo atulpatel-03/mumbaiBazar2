@@ -4,6 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import fire from '../fire';
 import "../asserts/scss/Request.scss";
 import firebase from 'firebase';
+import moment from 'moment';
 
 const Request = () => {
 
@@ -15,6 +16,7 @@ const Request = () => {
                 requestId: doc.id,
                 ...doc.data()
             }))
+            console.log("request",data1);
             setRequest(data1)
         })
         
@@ -65,6 +67,7 @@ const Request = () => {
             <div className='request-detail'>
                 <div className="amount">Amount : {t.request}</div>
                 <div className='from'>User : {t.name}</div>
+                <div className='from'>Time : {moment(t.requestId).format('dddd, MMMM Do, YYYY h:mm:ss A')}</div>
                 <div className='type'>Type : <div className={t.type}>{t.type}</div></div>
                 {t.type === "transfer" ? <div className='to'>Transfer to : {t.transferto}</div>:<div className='no-to'>UPI ID : {t.upiNo}</div>}
             </div>

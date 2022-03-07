@@ -29,28 +29,40 @@ const Users = () => {
             setUsers(data2);
         })
         console.log("users effect")
+        db.collection("Settings").doc('data').onSnapshot((query) => {
+            var temp = query.data().bonus;
+            console.log("rates effect",temp); 
+            setBonusRate(temp);
+            console.log("temp",temp)
+        })
     },[])
 
     const [users,setUsers] = useState([]);
+    const [bonusRate, setBonusRate] = useState("");
     const [allUsers,setAllUsers] = useState([]);
     const [allUsersTemp,setAllUsersTemp] = useState([]);
     const [check,setCheck]= useState(false);
+    const [referClick, setReferClcik] = useState(false);
     const [userInfo, setUserInfo] = useState({
         addFund:'',
         withDrawFund:'',
         userName:'',
+        phoneNo:'',
+        notifyMsg:'',
+        notifyTitle:''
     });
 
     var auth = fire.auth();
     var current = auth.currentUser;
     var db = fire.firestore();
+    var funs = fire.functions();
 
     if(!current){
         return <Redirect to='/' />
     }
 
     
-    const { addFund, withDrawFund, userName} = userInfo;
+    const { addFund, withDrawFund, userName, phoneNo, notifyMsg, notifyTitle} = userInfo;
 
     const onChange = e =>{
         setUserInfo({
@@ -86,7 +98,45 @@ const Users = () => {
             addFund:'',
         });
 
+        if(referClick){
+            console.log("chalraha")
+            var referedByTemp = "";
+            await db.collection("UsersData").doc(id).get().then((val) =>{
+                referedByTemp= val.data().referedby;
+                console.log("referedby",referedByTemp,val.data().referedby);
+            });
+            var referedId = "";
+            await db.collection("UsersData").where("mycode","==",referedByTemp).get().then((val) =>{
+                referedId = val.docs[0].id;
+            });
 
+            var tempReferBalance =0;
+            await db.collection("UsersData").doc(referedId).get().then((doc) =>{
+                tempReferBalance = doc.data().Balance;
+            })
+            console.log("before",tempReferBalance);
+            var addFundPercet = parseInt(addFund);
+            tempReferBalance = tempReferBalance + addFundPercet*0.20;
+            console.log("After",tempReferBalance);
+            var timestamptemp= firebase.firestore.Timestamp.now();
+                var obj = [{
+                    "amount":addFundPercet*0.20,
+                    "game":'',
+                    "gameName":'',
+                    "type":"bonus",
+                    "timestamp":timestamptemp
+                }];
+            var trans = firebase.firestore.FieldValue.arrayUnion.apply(null,obj);
+            await db.collection("UsersData").doc(referedId).update({'Balance':tempReferBalance,'Transaction':trans});
+            setReferClcik(false);
+        }
+
+
+    }
+
+    const checkboxClick = () =>{
+        console.log("check",referClick)
+        setReferClcik(!referClick);
     }
 
     const handleSubmit2 = async (id) =>{
@@ -122,29 +172,96 @@ const Users = () => {
             setAllUsers(allUsersTemp);
         }
         else{
-            let searchArr = allUsers.filter((t) => (t.Name.toLowerCase() === userName.toLowerCase()))
+            let searchArr = allUsers.filter((t) => (t.Name.toLowerCase().includes(userName.toLowerCase())))
         setAllUsers(searchArr);
         }
-        setUserInfo({
-            ...userInfo,
-            userName:''
+        // setUserInfo({
+        //     ...userInfo,
+        //     userName:''
+        // })
+    }
+
+    const handleNotify = async (id) =>{
+        console.log("idfs",id,notifyMsg,notifyTitle);
+        var userToken = "";
+        await db.collection("UsersData").doc(id).get().then((val) =>{
+            userToken = val.data().deviceToken;
         })
+
+       var addNotificat =  funs.httpsCallable("sendNotification");
+       addNotificat({
+        token:userToken,
+        payload:{
+            "notification":{
+                "title":notifyTitle,
+                "body":notifyMsg
+            }
+        },
+       })
+
+       var timestamptemp= firebase.firestore.Timestamp.now();
+            var obj = [{
+                "body":notifyMsg,
+                "title":notifyTitle,
+                "timestamp":timestamptemp
+            }];
+        var trans = firebase.firestore.FieldValue.arrayUnion.apply(null,obj);
+        await db.collection("UsersData").doc(id).update({'alerts':trans});
+
+       setUserInfo({
+           ...userInfo,
+           notifyMsg:'',
+           notifyTitle:''
+       })
+    }
+    const handleSubmit4 = () =>{
+        if(phoneNo === ""){
+            setAllUsers(allUsersTemp);
+        }
+        else{
+            let searchArr = allUsers.filter((t) => (t.phone.toLowerCase().includes(phoneNo.toLowerCase())))
+        setAllUsers(searchArr);
+        }
+        // setUserInfo({
+        //     ...userInfo,
+        //     userName:'',
+        //     phoneNo:''
+        // })
     }
 
     const handleClick =async (id) =>{
         console.log("id",id)
         var timestamptemp= firebase.firestore.Timestamp.now();
             var obj = [{
-                "amount":10,
+                "amount":parseInt(bonusRate),
                 "game":'',
                 "gameName":'',
                 "type":"bonus",
                 "timestamp":timestamptemp
             }];
-        var trans = firebase.firestore.FieldValue.arrayUnion.apply(null,obj);
-        await db.collection("UsersData").doc(id).update({'active':true,'Balance':10,'Transaction':trans})
+        if(parseInt(bonusRate) >0){
+            var trans = firebase.firestore.FieldValue.arrayUnion.apply(null,obj);
+        await db.collection("UsersData").doc(id).update({'active':true,'Balance':parseInt(bonusRate),'Transaction':trans})
         console.log("done");
+        }
     }
+
+    // const handleClick2 =async (id) =>{
+    //     console.log("id",id)
+    //     var timestamptemp= firebase.firestore.Timestamp.now();
+    //         var obj = [{
+    //             "amount":parseInt(bonusRate),
+    //             "game":'',
+    //             "gameName":'',
+    //             "type":"bonus",
+    //             "timestamp":timestamptemp
+    //         }];
+    //    if(parseInt(bonusRate) > 0){
+    //     var trans = firebase.firestore.FieldValue.arrayUnion.apply(null,obj);
+    //     await db.collection("UsersData").doc(id).update({'active':false,'Balance':parseInt(bonusRate),'Transaction':trans})
+    //     console.log("done");
+    //    }
+    // }
 
     const handleUnapproved = async () =>{
         setCheck(!check);
@@ -166,10 +283,18 @@ const Users = () => {
 
     }
 
+    const handleRemoveFilter = () =>{
+         setUserInfo({
+            ...userInfo,
+            userName:'',
+            phoneNo:''
+        });
+        setAllUsers(allUsersTemp);
+    }
     const unapprovedUsers = users.map((t) =>( 
         <div className="approve-card">
                     <div className="name">Name - {t.Name}</div>
-                    <div className="phone">Phone No. - {t.phone}</div>
+                    <div className="phone">Phone No. - <a href={"https://wa.me/+91"+t.phone}>{" "}<i class="fab fa-whatsapp-square whatsapp-icon"></i>{" "}{t.phone}</a> </div>
                     <div className="buttons">  
               
                 <button type="button" className="btn btn-large approve-btn" onClick={() =>handleClick(t.id)}>Approve</button>
@@ -240,6 +365,7 @@ const Users = () => {
                 </div>
             </div>
         </form>
+        <input type="checkbox" name="referClick" value={referClick} onClick={checkboxClick} />{" "}Send refer amount<br/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -286,6 +412,55 @@ const Users = () => {
     </div>
   </div>
 </div>
+ <button type="button" class="btn btn-large withdraw-fund" data-toggle="modal" data-target="#exampleModal3">
+ Send Notification
+</button>
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+        <button type="button" className="close close-btn" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form className="gameform2">
+            <div className="gamedetail">
+                <div className="form-group">
+                    <label>Title</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter Title"
+                        name="notifyTitle"
+                        value={notifyTitle}
+                        onChange={onChange}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Message</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter Message"
+                        name="notifyMsg"
+                        value={notifyMsg}
+                        onChange={onChange}
+                        required
+                    />
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onClick={() =>handleNotify(t.id)} data-dismiss="modal">Send Notification</button>
+      </div>
+    </div>
+  </div>
+</div>
             </div>
             </div>
             <h2 className='heading-info'>Transaction</h2>
@@ -308,7 +483,7 @@ const Users = () => {
             <div className="name">Name - {t.Name}</div>
             <div className="phone">Phone No. -<a href={"https://wa.me/+91"+t.phone}>{" "}<i class="fab fa-whatsapp-square whatsapp-icon"></i>{" "}{t.phone}</a> </div>
             <div className="buttons">  
-      
+            {/* <button type="button" className="btn btn-large approve-btn unapprove-btn-color" onClick={()=>handleClick2(t.id)}>Unapprove</button> */}
         <button type="button" className="btn btn-large view-btn" onClick={()=>handleView(t.id)}>View</button>
         </div>
         </div>
@@ -321,12 +496,20 @@ const Users = () => {
             <Navbar />
             <div className='unapproved-users'>
                 <div className='btn btn-large btn-primary unapprove-btn' onClick={handleUnapproved}>{!check?"Show Unapproved Users":"Show All Users"}</div>
+               
                 <div className='search'>
                     <input type="text" id="form1" className="form-control search-bar" placeholder="Name" name="userName" value={userName} onChange={onChange}/>
                     <button type="button" className="btn btn-primary search-btn" onClick={handleSubmit3}>
                     <i className="fas fa-search"></i>
                     </button>
                 </div>
+                <div className='search-2'>
+                    <input type="text" id="form1" className="form-control search-bar" placeholder="Phone Number" name="phoneNo" value={phoneNo} onChange={onChange}/>
+                    <button type="button" className="btn btn-primary search-btn" onClick={handleSubmit4}>
+                    <i className="fas fa-search"></i>
+                    </button>
+                </div>
+                <div className='btn btn-large btn-primary remove-btn' onClick={handleRemoveFilter}>Remove Filters</div>
             </div>
             <h1 className="heading-user">{!check?"All Users":"Unapproved Users"} </h1>
             <div className="approve container">

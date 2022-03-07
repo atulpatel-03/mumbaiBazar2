@@ -12,6 +12,7 @@ import Request from "./components/Request";
 import RateGully from "./components/RateGully";
 import Setting from "./components/Setting";
 import Transaction from "./components/Transaction";
+import BonusAmount from "./components/BonusAmount";
 
 function App() {
   const [user, setUser] = useState('');
@@ -50,6 +51,7 @@ function App() {
             <Route exact path="/gali-game-rate" component={RateGully} />
             <Route exact path="/setting" component={Setting} />
             <Route exact path="/all-transaction" component={Transaction} />
+            <Route exact path="/bonus-amount" component={BonusAmount} />
           </Switch>
         </Fragment>
       </Router>

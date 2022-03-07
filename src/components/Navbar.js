@@ -11,7 +11,7 @@ const Navbar = () => {
     return (
         <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-  <Link to='/dashboard' className="navbar-brand brand-heading"><img className="nav-logo" src={Logo}/>Mumbai Bazar</Link>
+  <Link to='/dashboard' className="navbar-brand brand-heading"><img className="nav-logo" src={Logo}/>Main Mumbai Bazar</Link>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -30,6 +30,7 @@ const Navbar = () => {
         <div class="dropdown-divider"></div>
         <Link to='/gali-game-rate' class="dropdown-item">Gali Desawar Rates</Link>
         <Link to='/all-transaction' class="dropdown-item">All Transactions</Link>
+        <Link to='/bonus-amount' class="dropdown-item">Update Bonus</Link>
         </div>
       </li>
       <li class="nav-item">
