@@ -28,7 +28,7 @@ const Navbar = () => {
         <Link to='/create-game' class="dropdown-item">Create Game</Link>
         <Link to='/game-rate' class="dropdown-item">Game Rates</Link>
         <div class="dropdown-divider"></div>
-        <Link to='/gali-game-rate' class="dropdown-item">Gali Desawar Rates</Link>
+        {/* <Link to='/gali-game-rate' class="dropdown-item">Gali Desawar Rates</Link> */}
         <Link to='/all-transaction' class="dropdown-item">All Transactions</Link>
         <Link to='/bonus-amount' class="dropdown-item">Update Bonus</Link>
         </div>

@@ -90,7 +90,7 @@ const Login = () => {
         
         <div className="loginContainer">
         <img className="nav-logo-login" src={Logo}/>
-        <div className='brand-name-login'>Mumbai Bazar</div>
+        <div className='brand-name-login'>Main Mumbai Bazar</div>
             <label>Username</label>
             <input 
                 type="text"

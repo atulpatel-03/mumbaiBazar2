@@ -241,9 +241,35 @@ const Users = () => {
             }];
         if(parseInt(bonusRate) >0){
             var trans = firebase.firestore.FieldValue.arrayUnion.apply(null,obj);
-        await db.collection("UsersData").doc(id).update({'active':true,'Balance':parseInt(bonusRate),'Transaction':trans})
-        console.log("done");
+        await db.collection("UsersData").doc(id).update({'active':true,'Balance':parseInt(bonusRate),'Transaction':trans});
+        }else{
+            await db.collection("UsersData").doc(id).update({'active':true});
         }
+        var userToken = "";
+        await db.collection("UsersData").doc(id).get().then((val) =>{
+            userToken = val.data().deviceToken;
+        })
+        console.log("usertoken",userToken);
+        var addNotificat =  funs.httpsCallable("sendNotification");
+       addNotificat({
+        token:userToken,
+        payload:{
+            "notification":{
+                "title":"Approved",
+                "body":"I'd approved, Now you can bid and start earning money."
+            }
+        },
+       })
+
+       var timestamptemp= firebase.firestore.Timestamp.now();
+            var obj = [{
+                "title":"Approved",
+                "body":"I'd approved, Now you can bid and start earning money.",
+                "timestamp":timestamptemp
+            }];
+        var trans = firebase.firestore.FieldValue.arrayUnion.apply(null,obj);
+        await db.collection("UsersData").doc(id).update({'alerts':trans});
+        console.log("done");
     }
 
     // const handleClick2 =async (id) =>{
